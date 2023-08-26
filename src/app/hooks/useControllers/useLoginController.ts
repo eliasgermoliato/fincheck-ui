@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import toast from "react-hot-toast";
 import useSigninMutation from "../useFetches/useSigninMutation";
+import { useAuth } from "../useAuth";
 
 const schema = z.object({
   email: z
@@ -19,6 +20,7 @@ interface FormData extends z.infer<typeof schema> {}
 
 export function useLoginController() {
   const { mutateAsync, isLoading } = useSigninMutation();
+  const { signin } = useAuth();
 
   const {
     register,
@@ -31,8 +33,7 @@ export function useLoginController() {
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
       const { accessToken } = await mutateAsync(data);
-
-      console.log({ accessToken });
+      signin(accessToken);
     } catch {
       toast.error("Ocorreu um erro ao acessar a sua conta.");
     }
