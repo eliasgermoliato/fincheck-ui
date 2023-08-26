@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
-import { useRegisterController } from "./useRegisterController";
+import { useRegisterController } from "../../hooks/useControllers/useRegisterController";
 
 export function Register() {
-  const { errors, handleSubmit, register } = useRegisterController();
+  const { errors, handleSubmit, register, isLoading } = useRegisterController();
 
   return (
     <>
@@ -50,7 +50,7 @@ export function Register() {
           error={errors.password?.message}
         />
 
-        <Button type="submit" className="mt-2">
+        <Button type="submit" className="mt-2" isLoading={isLoading}>
           Criar conta
         </Button>
       </form>
