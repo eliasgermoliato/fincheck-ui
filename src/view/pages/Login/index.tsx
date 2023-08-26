@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
-import { useLoginController } from "./useLoginController";
+import { useLoginController } from "../../hooks/useControllers/useLoginController";
 
 export function Login() {
-  const { register, handleSubmit, errors } = useLoginController();
+  const { register, handleSubmit, errors, isLoading } = useLoginController();
 
   return (
     <>
@@ -40,7 +40,7 @@ export function Login() {
           error={errors.password?.message}
         />
 
-        <Button type="submit" className="mt-2">
+        <Button type="submit" className="mt-2" isLoading={isLoading}>
           Entrar
         </Button>
       </form>
