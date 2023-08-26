@@ -20,7 +20,7 @@ export function AuthLayout() {
           alt="Ilustração da plataforma"
         />
 
-        <div className="max-w-[656px] bottom-8 p-10 absolute rounded-b-[32px] bg-white">
+        <div className="max-w-[656px] bottom-8 mx-8 p-10 absolute rounded-b-[32px] bg-white">
           <Logo className="h-8 text-teal-900 " />
           <p className="text-xl mt-6 font-medium text-gray-700">
             Gerencie suas finanças pessoais de uma forma simples com o fincheck,
