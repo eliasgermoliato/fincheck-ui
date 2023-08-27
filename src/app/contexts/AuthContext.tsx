@@ -5,6 +5,7 @@ import { localStorageKeys } from "../config/localStorageKeys";
 interface AuthContextValue {
   signedIn: boolean;
   signin(accessToken: string): void;
+  signout(): void;
 }
 
 export const AuthContext = createContext({} as AuthContextValue);
@@ -24,10 +25,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setPersistedAccessToken(accessToken);
       setSignedIn(true);
     },
-    [setPersistedAccessToken],
+    [setPersistedAccessToken, setSignedIn],
   );
 
-  const authValue = useMemo(() => ({ signedIn, signin }), [signedIn, signin]);
+  const signout = useCallback(() => {
+    setPersistedAccessToken("");
+    setSignedIn(false);
+  }, [setPersistedAccessToken, setSignedIn]);
+
+  const authValue = useMemo(
+    () => ({ signedIn, signin, signout }),
+    [signedIn, signin, signout],
+  );
 
   return (
     <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
