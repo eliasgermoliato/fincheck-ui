@@ -1,6 +1,7 @@
 import { createContext, useCallback, useMemo, useState } from "react";
 import usePersistedState from "../hooks/usePersistedState";
 import { localStorageKeys } from "../config/localStorageKeys";
+import useCurrentUserQuery from "../hooks/useFetches/useCurrentUserQuery";
 
 interface AuthContextValue {
   signedIn: boolean;
@@ -37,6 +38,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     () => ({ signedIn, signin, signout }),
     [signedIn, signin, signout],
   );
+
+  const { isSuccess } = useCurrentUserQuery(signedIn);
+
+  console.log({ isSuccess });
 
   return (
     <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
