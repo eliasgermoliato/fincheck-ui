@@ -1,7 +1,15 @@
-import { createContext, useCallback, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import usePersistedState from "../hooks/usePersistedState";
 import { localStorageKeys } from "../config/localStorageKeys";
 import useCurrentUserQuery from "../hooks/useFetches/useCurrentUserQuery";
+import { toast } from "react-hot-toast";
+import { LaunchScreen } from "../../view/components/LaunchScreen";
 
 interface AuthContextValue {
   signedIn: boolean;
@@ -21,6 +29,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return !!persistedAccessToken;
   });
 
+  const { isError, isFetching, isSuccess, remove } = useCurrentUserQuery({
+    enabled: signedIn,
+  });
+
   const signin = useCallback(
     (accessToken: string) => {
       setPersistedAccessToken(accessToken);
@@ -32,18 +44,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signout = useCallback(() => {
     setPersistedAccessToken("");
     setSignedIn(false);
-  }, [setPersistedAccessToken, setSignedIn]);
+    remove();
+  }, [setPersistedAccessToken, setSignedIn, remove]);
 
   const authValue = useMemo(
-    () => ({ signedIn, signin, signout }),
-    [signedIn, signin, signout],
+    () => ({ signedIn: isSuccess && signedIn, signin, signout }),
+    [isSuccess, signedIn, signin, signout],
   );
 
-  const { isSuccess } = useCurrentUserQuery(signedIn);
-
-  console.log({ isSuccess });
+  useEffect(() => {
+    if (isError) {
+      toast.error("Sua sessão expirou!");
+      signout();
+    }
+  }, [isError, signout]);
 
   return (
-    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authValue}>
+      <LaunchScreen isLoading={isFetching} />
+
+      {!isFetching && children}
+    </AuthContext.Provider>
   );
 }
