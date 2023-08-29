@@ -1,13 +1,16 @@
-import { useAuth } from "../../../app/hooks/useAuth";
-import { Button } from "../../components/Button";
+import { Accounts } from "./components/Accounts";
+import { Transactions } from "./components/Transactions";
 
 export function Home() {
-  const { signout } = useAuth();
-
   return (
-    <div>
-      <h1>Home Page</h1>
-      <Button onClick={signout}>Sair</Button>
+    <div className="w-full h-full flex flex-col gap-4 md:flex-row">
+      <div className="w-full md:w-1/2">
+        <Accounts />
+      </div>
+
+      <div className="w-full md:w-1/2">
+        <Transactions />
+      </div>
     </div>
   );
 }
