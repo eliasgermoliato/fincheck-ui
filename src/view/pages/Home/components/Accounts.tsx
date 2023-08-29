@@ -1,9 +1,9 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { EyeIcon } from "../../../components/icons/EyeIcon";
 import { AccountCard } from "./AccountCard";
 import { BankAccountType } from "../../../../interfaces/BankAccount";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { AccountsSliderNavigation } from "./AccountsSliderNavigation";
 
 export function Accounts() {
   return (
@@ -24,23 +24,19 @@ export function Accounts() {
       </div>
 
       <div className="flex-1 flex flex-col justify-end">
-        <div className="flex items-center justify-between">
-          <strong className="text-lg tracking-customTighter text-white">
-            Minhas contas
-          </strong>
-
-          <div>
-            <button className="py-3 pl-2.5 pr-3.5 rounded-full transition-colors enabled:hover:bg-black/10 disabled:opacity-40">
-              <ChevronLeftIcon className="w-6 h-6 text-white" />
-            </button>
-            <button className="py-3 pl-2.5 pr-3.5 rounded-full transition-colors enabled:hover:bg-black/10 disabled:opacity-40">
-              <ChevronRightIcon className="w-6 h-6 text-white" />
-            </button>
-          </div>
-        </div>
-
-        <div className="mt-4">
+        <div>
           <Swiper spaceBetween={16} slidesPerView={2.1}>
+            <div
+              className="flex items-center justify-between mb-4"
+              slot="container-start"
+            >
+              <strong className="text-lg tracking-customTighter text-white">
+                Minhas contas
+              </strong>
+
+              <AccountsSliderNavigation />
+            </div>
+
             <SwiperSlide>
               <AccountCard
                 color="#7950F2"
