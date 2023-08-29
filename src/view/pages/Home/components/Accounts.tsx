@@ -2,6 +2,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { EyeIcon } from "../../../components/icons/EyeIcon";
 import { AccountCard } from "./AccountCard";
 import { BankAccountType } from "../../../../interfaces/BankAccount";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 export function Accounts() {
   return (
@@ -38,24 +40,34 @@ export function Accounts() {
         </div>
 
         <div className="mt-4">
-          <AccountCard
-            color="#7950F2"
-            name="Nubank"
-            balance={1000.23}
-            type={BankAccountType.CHECKING}
-          />
-          <AccountCard
-            color="#333"
-            name="XP"
-            balance={1000.23}
-            type={BankAccountType.INVESTMENT}
-          />
-          <AccountCard
-            color="#0F0"
-            name="Carteira"
-            balance={1000.23}
-            type={BankAccountType.CASH}
-          />
+          <Swiper spaceBetween={16} slidesPerView={2.1}>
+            <SwiperSlide>
+              <AccountCard
+                color="#7950F2"
+                name="Nubank"
+                balance={1000.23}
+                type={BankAccountType.CHECKING}
+              />
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <AccountCard
+                color="#333"
+                name="XP"
+                balance={1000.23}
+                type={BankAccountType.INVESTMENT}
+              />
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <AccountCard
+                color="#0F0"
+                name="Carteira"
+                balance={1000.23}
+                type={BankAccountType.CASH}
+              />
+            </SwiperSlide>
+          </Swiper>
         </div>
       </div>
     </div>
