@@ -17,5 +17,6 @@ export function useAccountsController() {
     screenSize,
     sliderState,
     setSliderState,
+    isLoading: true,
   };
 }
