@@ -5,11 +5,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { MONTHS } from "../../../../../app/config/constants";
 import { SliderOption } from "./SliderOption";
 import { SliderNavigation } from "./SliderNavigation";
+import { formatCurrency } from "../../../../../app/utils/formatCurrency";
+import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
 
 export function Transactions() {
   return (
-    <div className="w-full h-full rounded-2xl px-4 py-8 bg-gray-100 md:p-10">
-      <header className="">
+    <div className="w-full h-full rounded-2xl px-4 py-8 flex flex-col bg-gray-100 md:p-10">
+      <header>
         <div className="flex items-center justify-between">
           <button className="flex items-center gap-2">
             <TransactionsIcon />
@@ -42,7 +44,41 @@ export function Transactions() {
         </div>
       </header>
 
-      <div>Conteúdo </div>
+      <div className="mt-4 space-y-2 flex-1 overflow-y-auto">
+        <div className="p-4 rounded-2xl flex items-center justify-between gap-4 bg-white">
+          <div className="flex-1 flex items-center gap-3">
+            <CategoryIcon type="expense" />
+
+            <div>
+              <strong className="font-bold tracking-customTight block">
+                Almoço
+              </strong>
+              <span className="text-sm text-gray-600">04/04/2023</span>
+            </div>
+          </div>
+
+          <span className="font-medium text-red-800 tracking-customTight">
+            - {formatCurrency(123)}
+          </span>
+        </div>
+
+        <div className="p-4 rounded-2xl flex items-center justify-between gap-4 bg-white">
+          <div className="flex-1 flex items-center gap-3">
+            <CategoryIcon type="income" />
+
+            <div>
+              <strong className="font-bold tracking-customTight block">
+                Salário
+              </strong>
+              <span className="text-sm text-gray-600">04/04/2023</span>
+            </div>
+          </div>
+
+          <span className="font-medium text-green-800 tracking-customTight">
+            {formatCurrency(20000)}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

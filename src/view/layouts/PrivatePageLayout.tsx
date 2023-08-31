@@ -9,7 +9,7 @@ export function PrivatePageLayout() {
         <Logo className="h-6 text-teal-900" />
         <UserMenu />
       </header>
-      <main className="flex-1">
+      <main className="flex-1 max-h-[90%]">
         <Outlet />
       </main>
     </div>
