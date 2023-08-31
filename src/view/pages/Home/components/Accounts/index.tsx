@@ -5,9 +5,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { AccountsSliderNavigation } from "./SliderNavigation";
 import { useAccountsController } from "./useAccountsController";
+import { formatCurrency } from "../../../../../app/utils/formatCurrency";
+import { cn } from "../../../../../app/utils/cn";
 
 export function Accounts() {
-  const { sliderState, setSliderState, screenSize } = useAccountsController();
+  const {
+    areValuesVisible,
+    toggleValueVisibility,
+    screenSize,
+    sliderState,
+    setSliderState,
+  } = useAccountsController();
 
   return (
     <div className="w-full h-full rounded-2xl px-4 py-8 flex flex-col bg-teal-900 md:p-10">
@@ -17,11 +25,19 @@ export function Accounts() {
         </span>
 
         <div className="flex items-center gap-2">
-          <strong className="text-2xl tracking-customTighter text-white">
-            R$ 1000,00
+          <strong
+            className={cn(
+              "text-2xl tracking-customTighter text-white",
+              !areValuesVisible && "blur-md",
+            )}
+          >
+            {formatCurrency(10000)}
           </strong>
-          <button className="w-8 h-8 flex items-center justify-center">
-            <EyeIcon open />
+          <button
+            className="w-8 h-8 flex items-center justify-center"
+            onClick={toggleValueVisibility}
+          >
+            <EyeIcon open={!areValuesVisible} />
           </button>
         </div>
       </div>
