@@ -1,4 +1,5 @@
 import { Accounts } from "./components/Accounts";
+import { Fab } from "./components/Fab";
 import { HomeProvider } from "./components/HomeContext";
 import { Transactions } from "./components/Transactions";
 
@@ -14,6 +15,7 @@ export function Home() {
           <Transactions />
         </div>
       </div>
+      <Fab />
     </HomeProvider>
   );
 }
