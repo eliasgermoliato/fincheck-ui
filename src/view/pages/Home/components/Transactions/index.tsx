@@ -10,9 +10,11 @@ import { CategoryIcon } from "../../../../components/icons/categories/CategoryIc
 import { cn } from "../../../../../app/utils/cn";
 import { useTransactionsController } from "./useTransactionsController";
 import { Spinner } from "../../../../components/Spinner";
+import emptyStateImage from "../../../../../assets/empty-state.svg";
 
 export function Transactions() {
-  const { areValuesVisible, isLoading } = useTransactionsController();
+  const { areValuesVisible, isLoading, transactions } =
+    useTransactionsController();
 
   return (
     <div className="w-full h-full rounded-2xl px-4 py-8 flex flex-col bg-gray-100 md:p-10">
@@ -58,49 +60,64 @@ export function Transactions() {
           </header>
 
           <div className="mt-4 space-y-2 flex-1 overflow-y-auto">
-            <div className="p-4 rounded-2xl flex items-center justify-between gap-4 bg-white">
-              <div className="flex-1 flex items-center gap-3">
-                <CategoryIcon type="expense" />
-
-                <div>
-                  <strong className="font-bold tracking-customTight block">
-                    Almoço
-                  </strong>
-                  <span className="text-sm text-gray-600">04/04/2023</span>
-                </div>
+            {!transactions.length && (
+              <div className="h-full flex flex-col items-center  justify-center">
+                <img
+                  src={emptyStateImage}
+                  alt="Ilustração de uma mulher com uma lupa"
+                />
+                <p className="text-gray-700">
+                  Não encontramos nenhuma transação!
+                </p>
               </div>
+            )}
+            {!!transactions.length && (
+              <>
+                <div className="p-4 rounded-2xl flex items-center justify-between gap-4 bg-white">
+                  <div className="flex-1 flex items-center gap-3">
+                    <CategoryIcon type="expense" />
 
-              <span
-                className={cn(
-                  "font-medium text-red-800 tracking-customTight",
-                  !areValuesVisible && "blur-sm",
-                )}
-              >
-                - {formatCurrency(123)}
-              </span>
-            </div>
+                    <div>
+                      <strong className="font-bold tracking-customTight block">
+                        Almoço
+                      </strong>
+                      <span className="text-sm text-gray-600">04/04/2023</span>
+                    </div>
+                  </div>
 
-            <div className="p-4 rounded-2xl flex items-center justify-between gap-4 bg-white">
-              <div className="flex-1 flex items-center gap-3">
-                <CategoryIcon type="income" />
-
-                <div>
-                  <strong className="font-bold tracking-customTight block">
-                    Salário
-                  </strong>
-                  <span className="text-sm text-gray-600">04/04/2023</span>
+                  <span
+                    className={cn(
+                      "font-medium text-red-800 tracking-customTight",
+                      !areValuesVisible && "blur-sm",
+                    )}
+                  >
+                    - {formatCurrency(123)}
+                  </span>
                 </div>
-              </div>
 
-              <span
-                className={cn(
-                  "font-medium text-green-800 tracking-customTight",
-                  !areValuesVisible && "blur-sm",
-                )}
-              >
-                {formatCurrency(20000)}
-              </span>
-            </div>
+                <div className="p-4 rounded-2xl flex items-center justify-between gap-4 bg-white">
+                  <div className="flex-1 flex items-center gap-3">
+                    <CategoryIcon type="income" />
+
+                    <div>
+                      <strong className="font-bold tracking-customTight block">
+                        Salário
+                      </strong>
+                      <span className="text-sm text-gray-600">04/04/2023</span>
+                    </div>
+                  </div>
+
+                  <span
+                    className={cn(
+                      "font-medium text-green-800 tracking-customTight",
+                      !areValuesVisible && "blur-sm",
+                    )}
+                  >
+                    {formatCurrency(20000)}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </>
       )}
