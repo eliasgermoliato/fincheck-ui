@@ -27,7 +27,7 @@ function DropdownMenuContent({ children, className }: DropdownMenuProps) {
     <RdxDropdownMenu.Portal>
       <RdxDropdownMenu.Content
         className={cn(
-          "p-2 rounded-2xl bg-white space-y-2 z-50 shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)]",
+          "p-2 rounded-2xl bg-white space-y-2 z-50 shadow-default",
           "data-[side=bottom]:animate-slide-up-and-fade",
           "data-[side=top]:animate-slide-down-and-fade",
           className,
