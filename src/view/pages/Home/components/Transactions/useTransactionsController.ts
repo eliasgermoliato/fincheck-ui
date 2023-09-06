@@ -4,7 +4,7 @@ import { useHome } from "../HomeContext/useHome";
 export function useTransactionsController() {
   const { areValuesVisible } = useHome();
 
-  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(true);
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
 
   function handleOpenFiltersModal() {
     setIsFiltersModalOpen(true);
