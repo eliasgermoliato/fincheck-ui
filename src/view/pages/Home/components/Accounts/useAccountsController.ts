@@ -3,7 +3,8 @@ import { useScreenSize } from "../../../../../app/hooks/useScreenSize";
 import { useHome } from "../HomeContext/useHome";
 
 export function useAccountsController() {
-  const { areValuesVisible, toggleValueVisibility } = useHome();
+  const { areValuesVisible, toggleValueVisibility, openNewAccountModalOpen } =
+    useHome();
   const screenSize = useScreenSize();
 
   const [sliderState, setSliderState] = useState({
@@ -19,5 +20,6 @@ export function useAccountsController() {
     setSliderState,
     isLoading: false,
     accounts: [0],
+    openNewAccountModalOpen,
   };
 }

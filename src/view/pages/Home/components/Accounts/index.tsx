@@ -19,6 +19,7 @@ export function Accounts() {
     setSliderState,
     isLoading,
     accounts,
+    openNewAccountModalOpen,
   } = useAccountsController();
 
   return (
@@ -63,7 +64,10 @@ export function Accounts() {
                   </strong>
                 </div>
 
-                <button className="mt-4 h-52 rounded-2xl flex flex-col items-center justify-center gap-4 border-2 border-dashed border-teal-600 text-white">
+                <button
+                  className="mt-4 h-52 rounded-2xl flex flex-col items-center justify-center gap-4 border-2 border-dashed border-teal-600 text-white"
+                  onClick={openNewAccountModalOpen}
+                >
                   <div className="w-11 h-11 rounded-full border-2 border-dashed border-white flex items-center justify-center">
                     <PlusIcon className="w-6 h-6" />
                   </div>
