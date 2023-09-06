@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     remove();
   }, [setPersistedAccessToken, setSignedIn, remove]);
 
-  const authValue = useMemo(
+  const authContextValue = useMemo(
     () => ({ signedIn: isSuccess && signedIn, signin, signout }),
     [isSuccess, signedIn, signin, signout],
   );
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [isError, signout]);
 
   return (
-    <AuthContext.Provider value={authValue}>
+    <AuthContext.Provider value={authContextValue}>
       <LaunchScreen isLoading={isFetching} />
 
       {!isFetching && children}
