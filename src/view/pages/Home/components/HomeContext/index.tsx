@@ -24,7 +24,7 @@ export function HomeProvider({ children }: { children: React.ReactNode }) {
   );
   const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
-    useState(true);
+    useState(false);
   const [newTransactionType, setNewTransactionType] =
     useState<TransactionType | null>(null);
 
