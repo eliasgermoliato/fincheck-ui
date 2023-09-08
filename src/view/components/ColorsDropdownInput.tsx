@@ -52,7 +52,7 @@ export function ColorsDropdownInput({
               className,
             )}
           >
-            Cor
+            <label>Cor</label>
             <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-800">
               {!selectedColor && <ChevronDownIcon className="w-6 h-6" />}
 
