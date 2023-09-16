@@ -1,4 +1,4 @@
-import { BankAccountsResponse } from "../../../interfaces/BankAccount";
+import { BankAccountsResponse } from "../../entities/BankAccount";
 import { httpClient } from "../../utils/httpClient";
 
 export async function getAll() {

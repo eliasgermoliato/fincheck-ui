@@ -1,6 +1,6 @@
 import { cn } from "../../../../../app/utils/cn";
 import { formatCurrency } from "../../../../../app/utils/formatCurrency";
-import { BankAccountType } from "../../../../../interfaces/BankAccount";
+import { BankAccountType } from "../../../../../app/entities/BankAccount";
 import { BankAccountTypeIcon } from "../../../../components/icons/BankAccountTypeIcon";
 import { useHome } from "../HomeContext/useHome";
 

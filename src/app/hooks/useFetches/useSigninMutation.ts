@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { SigninParams } from "../../../interfaces/Signin";
+import { SigninParams } from "../../entities/Signin";
 import { authService } from "../../../app/services/authService";
 
 export default function useSigninMutation() {

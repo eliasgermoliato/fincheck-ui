@@ -1,4 +1,4 @@
-import { TransactionType } from "../../../../../../interfaces/TransactionType";
+import { TransactionType } from "../../../../../../app/entities/TransactionType";
 import { Button } from "../../../../../components/Button";
 import { DatePickerInput } from "../../../../../components/DatePickerInput";
 import { Input } from "../../../../../components/Input";

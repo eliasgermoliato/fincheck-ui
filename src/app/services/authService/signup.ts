@@ -1,4 +1,4 @@
-import { SignupData, SignupResponse } from "../../../interfaces/Signup";
+import { SignupData, SignupResponse } from "../../entities/Signup";
 import { httpClient } from "../../utils/httpClient";
 
 export async function signup(body: SignupData) {

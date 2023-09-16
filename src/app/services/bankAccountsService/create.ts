@@ -1,4 +1,4 @@
-import { BankAccountParamsFormatted } from "../../../interfaces/BankAccount";
+import { BankAccountParamsFormatted } from "../../entities/BankAccount";
 import { httpClient } from "../../utils/httpClient";
 
 export async function create(body: BankAccountParamsFormatted) {

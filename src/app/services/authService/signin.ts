@@ -1,4 +1,4 @@
-import { SigninParams, SigninResponse } from "../../../interfaces/Signin";
+import { SigninParams, SigninResponse } from "../../entities/Signin";
 import { httpClient } from "../../utils/httpClient";
 
 export async function signin(body: SigninParams) {

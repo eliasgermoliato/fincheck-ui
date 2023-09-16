@@ -3,7 +3,7 @@ import { DropdownMenu } from "../../../../components/DropdownMenu";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
 import { BankAccountIcon } from "../../../../components/icons/BankAccountIcon";
 import { useHome } from "../HomeContext/useHome";
-import { TransactionType } from "../../../../../interfaces/TransactionType";
+import { TransactionType } from "../../../../../app/entities/TransactionType";
 
 export function Fab() {
   const { openNewAccountModalOpen, openNewTransactionModalOpen } = useHome();

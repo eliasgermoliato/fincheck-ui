@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { bankAccountsService } from "../../services/bankAccountsService";
-import { BankAccountParamsFormatted } from "../../../interfaces/BankAccount";
+import { BankAccountParamsFormatted } from "../../entities/BankAccount";
 
 export default function useBankAccountsMutation() {
   const mutation = useMutation({

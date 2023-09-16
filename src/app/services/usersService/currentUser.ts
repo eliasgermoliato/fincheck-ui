@@ -1,4 +1,4 @@
-import { CurrentUserResponse } from "../../../interfaces/CurrentUser";
+import { CurrentUserResponse } from "../../entities/CurrentUser";
 import { httpClient } from "../../utils/httpClient";
 
 export async function currentUser() {
