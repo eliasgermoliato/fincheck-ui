@@ -3,7 +3,7 @@ import { useHome } from "../../HomeContext/useHome";
 import { BankAccountType } from "../../../../../../app/entities/BankAccount";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useBankAccountsMutation from "../../../../../../app/hooks/useFetches/useBankAccountsMutation";
+import { useCreateBankAccountsMutation } from "../../../../../../app/hooks/useFetches/useBankAccountsMutation";
 import { currencyStringToNumber } from "../../../../../../app/utils/currencyStringToNumber";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
@@ -41,7 +41,7 @@ export function useNewAccountModalController() {
   });
 
   const queryClient = useQueryClient();
-  const { mutateAsync, isLoading } = useBankAccountsMutation();
+  const { mutateAsync, isLoading } = useCreateBankAccountsMutation();
 
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {

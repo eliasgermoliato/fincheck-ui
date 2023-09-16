@@ -1,11 +1,24 @@
 import { useMutation } from "@tanstack/react-query";
 import { bankAccountsService } from "../../services/bankAccountsService";
-import { BankAccountParamsFormatted } from "../../entities/BankAccount";
+import {
+  CreateBankAccountParams,
+  UpdateBankAccountParams,
+} from "../../entities/BankAccount";
 
-export default function useBankAccountsMutation() {
+export function useCreateBankAccountsMutation() {
   const mutation = useMutation({
-    mutationFn: async (body: BankAccountParamsFormatted) => {
+    mutationFn: async (body: CreateBankAccountParams) => {
       return bankAccountsService.create(body);
+    },
+  });
+
+  return { mutateAsync: mutation.mutateAsync, isLoading: mutation.isLoading };
+}
+
+export function useUpdateBankAccountsMutation() {
+  const mutation = useMutation({
+    mutationFn: async (body: UpdateBankAccountParams) => {
+      return bankAccountsService.update(body);
     },
   });
 

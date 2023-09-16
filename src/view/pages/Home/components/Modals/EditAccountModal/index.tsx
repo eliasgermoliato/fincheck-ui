@@ -5,24 +5,24 @@ import { Input } from "../../../../../components/Input";
 import { InputCurrency } from "../../../../../components/InputCurrency";
 import { Modal } from "../../../../../components/Modal";
 import { Select } from "../../../../../components/Select";
-import { useNewAccountModalController } from "./useNewAccountModalController";
+import { useEditAccountModalController } from "./useEditAccountModalController";
 
 export function EditAccountModal() {
   const {
-    isNewAccountModalOpen,
+    isEditAccountModalOpen,
     control,
     isLoading,
     errors,
-    closeNewAccountModalOpen,
+    closeEditAccountModal,
     register,
     handleSubmit,
-  } = useNewAccountModalController();
+  } = useEditAccountModalController();
 
   return (
     <Modal
-      title="Nova Conta"
-      isOpen={isNewAccountModalOpen}
-      onClose={closeNewAccountModalOpen}
+      title="Editar Conta"
+      isOpen={isEditAccountModalOpen}
+      onClose={closeEditAccountModal}
     >
       <form onSubmit={handleSubmit}>
         <div>
@@ -97,7 +97,7 @@ export function EditAccountModal() {
         </div>
 
         <Button type="submit" className="w-full mt-6" isLoading={isLoading}>
-          Criar
+          Salvar
         </Button>
       </form>
     </Modal>

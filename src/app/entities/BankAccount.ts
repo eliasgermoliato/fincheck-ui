@@ -4,19 +4,7 @@ export enum BankAccountType {
   CASH = "CASH",
 }
 
-export interface BankAccountParams {
-  name: string;
-  initialBalance: string;
-  color: string;
-  type: BankAccountType;
-}
-
-export interface BankAccountParamsFormatted
-  extends Omit<BankAccountParams, "initialBalance"> {
-  initialBalance: number;
-}
-
-type BankAccount = {
+export type BankAccount = {
   id: string;
   name: string;
   initialBalance: number;
@@ -24,5 +12,11 @@ type BankAccount = {
   color: string;
   currentBalance: number;
 };
+
+export interface CreateBankAccountParams
+  extends Omit<BankAccount, "id, currentBalance"> {}
+
+export interface UpdateBankAccountParams
+  extends Omit<BankAccount, "currentBalance"> {}
 
 export interface BankAccountsResponse extends Array<BankAccount> {}

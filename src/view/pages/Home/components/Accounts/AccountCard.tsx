@@ -1,22 +1,24 @@
 import { cn } from "../../../../../app/utils/cn";
 import { formatCurrency } from "../../../../../app/utils/formatCurrency";
-import { BankAccountType } from "../../../../../app/entities/BankAccount";
+import { BankAccount } from "../../../../../app/entities/BankAccount";
 import { BankAccountTypeIcon } from "../../../../components/icons/BankAccountTypeIcon";
 import { useHome } from "../HomeContext/useHome";
 
 interface AccountCardProps {
-  color: string;
-  name: string;
-  balance: number;
-  type: BankAccountType;
+  data: BankAccount;
 }
 
-export function AccountCard({ color, name, balance, type }: AccountCardProps) {
-  const { areValuesVisible } = useHome();
+export function AccountCard({ data }: AccountCardProps) {
+  const { currentBalance, name, type, color } = data;
+
+  const { areValuesVisible, openEditAccountModal } = useHome();
+
   return (
     <div
       className="h-[200px] p-4 rounded-2xl flex flex-col justify-between border-b-4 bg-white border-teal-950"
       style={{ borderColor: color }}
+      role="button"
+      onClick={() => openEditAccountModal(data)}
     >
       <div>
         <BankAccountTypeIcon type={type} />
@@ -32,7 +34,7 @@ export function AccountCard({ color, name, balance, type }: AccountCardProps) {
             !areValuesVisible && "blur-sm",
           )}
         >
-          {formatCurrency(balance)}
+          {formatCurrency(currentBalance)}
         </span>
         <small className="text-sm text-gray-600">Saldo atual</small>
       </div>
