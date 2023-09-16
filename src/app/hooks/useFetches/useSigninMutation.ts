@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { SigninpData } from "../../../interfaces/Signin";
+import { SigninParams } from "../../../interfaces/Signin";
 import { authService } from "../../../app/services/authService";
 
 export default function useSigninMutation() {
   const mutation = useMutation({
-    mutationFn: async (body: SigninpData) => {
+    mutationFn: async (body: SigninParams) => {
       return authService.signin(body);
     },
   });
