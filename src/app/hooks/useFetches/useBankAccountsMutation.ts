@@ -24,3 +24,13 @@ export function useUpdateBankAccountsMutation() {
 
   return { mutateAsync: mutation.mutateAsync, isLoading: mutation.isLoading };
 }
+
+export function useRemoveBankAccountsMutation() {
+  const mutation = useMutation({
+    mutationFn: async (bankAccountId: string) => {
+      return bankAccountsService.remove(bankAccountId);
+    },
+  });
+
+  return { mutateAsync: mutation.mutateAsync, isLoading: mutation.isLoading };
+}

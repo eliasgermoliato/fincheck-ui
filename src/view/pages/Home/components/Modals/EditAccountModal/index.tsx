@@ -6,6 +6,8 @@ import { InputCurrency } from "../../../../../components/InputCurrency";
 import { Modal } from "../../../../../components/Modal";
 import { Select } from "../../../../../components/Select";
 import { useEditAccountModalController } from "./useEditAccountModalController";
+import { TrashIcon } from "../../../../../components/icons/TrashIcon";
+import { ConfirmModal } from "../../../../../components/ConfirmModal";
 
 export function EditAccountModal() {
   const {
@@ -13,16 +15,44 @@ export function EditAccountModal() {
     control,
     isLoading,
     errors,
+    isDeleteModalOpen,
+    isLoadingDelete,
     closeEditAccountModal,
     register,
     handleSubmit,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteAccount,
   } = useEditAccountModalController();
+
+  if (isDeleteModalOpen) {
+    return (
+      <ConfirmModal
+        variant="danger"
+        title="Excluir"
+        subTitle="Tem certeza que deseja excluir esta conta?"
+        description="Ao excluir a conta, também serão excluídos todos os registros de receita e despesas relacionados."
+        confirmText="Sim, desejo excluir"
+        cancelText="Cancelar"
+        iconBg="bg-red-0"
+        Icon={() => <TrashIcon className="w-6 h-6 text-red-900" />}
+        isLoading={isLoadingDelete}
+        onConfirm={handleDeleteAccount}
+        onClose={handleCloseDeleteModal}
+      />
+    );
+  }
 
   return (
     <Modal
       title="Editar Conta"
       isOpen={isEditAccountModalOpen}
       onClose={closeEditAccountModal}
+      rightAction={
+        <button onClick={handleOpenDeleteModal}>
+          <TrashIcon className="w-6 h-6 text-red-900" />
+        </button>
+      }
     >
       <form onSubmit={handleSubmit}>
         <div>

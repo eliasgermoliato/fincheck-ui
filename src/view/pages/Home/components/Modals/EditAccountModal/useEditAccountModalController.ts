@@ -3,10 +3,14 @@ import { useHome } from "../../HomeContext/useHome";
 import { BankAccountType } from "../../../../../../app/entities/BankAccount";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUpdateBankAccountsMutation } from "../../../../../../app/hooks/useFetches/useBankAccountsMutation";
+import {
+  useRemoveBankAccountsMutation,
+  useUpdateBankAccountsMutation,
+} from "../../../../../../app/hooks/useFetches/useBankAccountsMutation";
 import { currencyStringToNumber } from "../../../../../../app/utils/currencyStringToNumber";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 const schema = z.object({
   initialBalance: z.union([
@@ -33,6 +37,8 @@ export function useEditAccountModalController() {
   const { isEditAccountModalOpen, accountBeingEdit, closeEditAccountModal } =
     useHome();
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const {
     register,
     handleSubmit: hookFormHandleSubmit,
@@ -44,11 +50,15 @@ export function useEditAccountModalController() {
   });
 
   const queryClient = useQueryClient();
-  const { mutateAsync, isLoading } = useUpdateBankAccountsMutation();
+  const { isLoading, mutateAsync: updateAccount } =
+    useUpdateBankAccountsMutation();
+
+  const { isLoading: isLoadingDelete, mutateAsync: removeAccount } =
+    useRemoveBankAccountsMutation();
 
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
-      await mutateAsync({
+      await updateAccount({
         ...data,
         initialBalance: currencyStringToNumber(data.initialBalance),
         id: accountBeingEdit!.id,
@@ -73,13 +83,40 @@ export function useEditAccountModalController() {
     };
   }
 
+  function handleOpenDeleteModal() {
+    setIsDeleteModalOpen(true);
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false);
+  }
+
+  async function handleDeleteAccount() {
+    try {
+      await removeAccount(accountBeingEdit!.id);
+
+      queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
+      toast.success("Conta excluída com sucesso!");
+      closeEditAccountModal();
+    } catch (error) {
+      toast.error(
+        "Desculpe, ocorreu um erro ao exluir a conta. Tente novamente.",
+      );
+    }
+  }
+
   return {
     isEditAccountModalOpen,
     control,
     isLoading,
     errors,
+    isDeleteModalOpen,
+    isLoadingDelete,
     closeEditAccountModal,
     register,
     handleSubmit,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteAccount,
   };
 }
