@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useScreenSize } from "../../../../../app/hooks/useScreenSize";
 import { useHome } from "../HomeContext/useHome";
+import useBankAccountsQuery from "../../../../../app/hooks/useFetches/useBankAccountsQuery";
 
 export function useAccountsController() {
   const { areValuesVisible, toggleValueVisibility, openNewAccountModalOpen } =
@@ -12,14 +13,16 @@ export function useAccountsController() {
     isEnd: false,
   });
 
+  const { data = [], isFetching } = useBankAccountsQuery();
+
   return {
     areValuesVisible,
-    toggleValueVisibility,
     screenSize,
     sliderState,
+    accounts: data,
+    isLoading: isFetching,
+    toggleValueVisibility,
     setSliderState,
-    isLoading: false,
-    accounts: [0],
     openNewAccountModalOpen,
   };
 }

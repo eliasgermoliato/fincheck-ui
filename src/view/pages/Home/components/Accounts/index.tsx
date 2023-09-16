@@ -1,6 +1,5 @@
 import { EyeIcon } from "../../../../components/icons/EyeIcon";
 import { AccountCard } from "./AccountCard";
-import { BankAccountType } from "../../../../../interfaces/BankAccount";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { SliderNavigation } from "./SliderNavigation";
@@ -103,32 +102,16 @@ export function Accounts() {
                     />
                   </div>
 
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#7950F2"
-                      name="Nubank"
-                      balance={1000.23}
-                      type={BankAccountType.CHECKING}
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#333"
-                      name="XP"
-                      balance={1000.23}
-                      type={BankAccountType.INVESTMENT}
-                    />
-                  </SwiperSlide>
-
-                  <SwiperSlide>
-                    <AccountCard
-                      color="#0F0"
-                      name="Carteira"
-                      balance={1000.23}
-                      type={BankAccountType.CASH}
-                    />
-                  </SwiperSlide>
+                  {accounts.map((account) => (
+                    <SwiperSlide key={account.id}>
+                      <AccountCard
+                        name={account.name}
+                        type={account.type}
+                        balance={account.currentBalance}
+                        color={account.color}
+                      />
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
             )}
