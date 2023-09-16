@@ -12,12 +12,13 @@ import { PlusIcon } from "@radix-ui/react-icons";
 export function Accounts() {
   const {
     areValuesVisible,
-    toggleValueVisibility,
     screenSize,
     sliderState,
-    setSliderState,
     isLoading,
     accounts,
+    currentBalance,
+    toggleValueVisibility,
+    setSliderState,
     openNewAccountModalOpen,
   } = useAccountsController();
 
@@ -43,7 +44,7 @@ export function Accounts() {
                   !areValuesVisible && "blur-md",
                 )}
               >
-                {formatCurrency(10000)}
+                {formatCurrency(currentBalance)}
               </strong>
               <button
                 className="w-8 h-8 flex items-center justify-center"
