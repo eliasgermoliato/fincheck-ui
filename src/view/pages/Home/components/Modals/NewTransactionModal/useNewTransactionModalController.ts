@@ -3,6 +3,8 @@ import { useHome } from "../../HomeContext/useHome";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import useBankAccountsQuery from "../../../../../../app/hooks/useFetches/useBankAccountsQuery";
+import useCategoriesQuery from "../../../../../../app/hooks/useFetches/useCategoriesQuery";
+import { useMemo } from "react";
 
 const schema = z.object({
   value: z.string().nonempty("Informe o valor"),
@@ -36,6 +38,13 @@ export function useNewTransactionModalController() {
   });
 
   const { data: accounts = [] } = useBankAccountsQuery();
+  const { data: categoriesList = [] } = useCategoriesQuery();
+
+  const categories = useMemo(() => {
+    return categoriesList.filter(
+      (category) => category.type === newTransactionType,
+    );
+  }, [categoriesList, newTransactionType]);
 
   function getDefaultValues(): z.infer<typeof schema> {
     return {
@@ -49,6 +58,7 @@ export function useNewTransactionModalController() {
 
   return {
     accounts,
+    categories,
     isNewTransactionModalOpen,
     newTransactionType,
     control,
