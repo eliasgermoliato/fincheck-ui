@@ -207,6 +207,9 @@ export default {
       boxShadow: {
         default: "0px 11px 20px 0px rgba(0,0,0,0.10)",
       },
+      fontFamily: {
+        sans: ["DM Sans", "sans-serif"],
+      },
     },
   },
   plugins: [],
