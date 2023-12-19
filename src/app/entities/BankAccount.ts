@@ -14,7 +14,7 @@ export type BankAccount = {
 };
 
 export interface CreateBankAccountParams
-  extends Omit<BankAccount, "id, currentBalance"> {}
+  extends Omit<BankAccount, "id" | "currentBalance"> {}
 
 export interface UpdateBankAccountParams
   extends Omit<BankAccount, "currentBalance"> {}
