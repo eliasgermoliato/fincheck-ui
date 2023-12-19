@@ -3,7 +3,7 @@ import { DropdownMenu } from "../../../../components/DropdownMenu";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
 import { BankAccountIcon } from "../../../../components/icons/BankAccountIcon";
 import { useHome } from "../HomeContext/useHome";
-import { TransactionType } from "../../../../../app/entities/TransactionType";
+import { TransactionType } from "../../../../../app/entities/Transaction";
 
 export function Fab() {
   const { openNewAccountModalOpen, openNewTransactionModalOpen } = useHome();
@@ -24,7 +24,7 @@ export function Fab() {
               openNewTransactionModalOpen(TransactionType.EXPENSE)
             }
           >
-            <CategoryIcon type="expense" />
+            <CategoryIcon type={TransactionType.EXPENSE} />
             Nova Despesa
           </DropdownMenu.Item>
 
@@ -32,7 +32,7 @@ export function Fab() {
             className="gap-2"
             onSelect={() => openNewTransactionModalOpen(TransactionType.INCOME)}
           >
-            <CategoryIcon type="income" />
+            <CategoryIcon type={TransactionType.INCOME} />
             Nova Receita
           </DropdownMenu.Item>
 

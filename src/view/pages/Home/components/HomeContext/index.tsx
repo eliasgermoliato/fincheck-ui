@@ -1,7 +1,7 @@
 import { createContext, useCallback, useMemo, useState } from "react";
 import usePersistedState from "../../../../../app/hooks/usePersistedState";
 import { localStorageKeys } from "../../../../../app/config/localStorageKeys";
-import { TransactionType } from "../../../../../app/entities/TransactionType";
+import { TransactionType } from "../../../../../app/entities/Transaction";
 import { BankAccount } from "../../../../../app/entities/BankAccount";
 
 interface HomeContextValue {
