@@ -3,12 +3,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import useBankAccountsQuery from "../../../../../../app/hooks/useFetches/useBankAccountsQuery";
 import useCategoriesQuery from "../../../../../../app/hooks/useFetches/useCategoriesQuery";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   Transaction,
   TransactionType,
 } from "../../../../../../app/entities/Transaction";
-import { useUpdateTransactionsMutation } from "../../../../../../app/hooks/useFetches/useTransactionsMutation";
+import {
+  useRemoveTransactionsMutation,
+  useUpdateTransactionsMutation,
+} from "../../../../../../app/hooks/useFetches/useTransactionsMutation";
 import { currencyStringToNumber } from "../../../../../../app/utils/currencyStringToNumber";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -25,7 +28,7 @@ type FormData = z.infer<typeof schema>;
 
 export function useEditTransactionModalController(
   transaction: Transaction | null,
-  onClose: () => void,
+  closeEditTransactionModal: () => void,
 ) {
   const {
     register,
@@ -44,6 +47,11 @@ export function useEditTransactionModalController(
   const { isLoading, mutateAsync: updateTransaction } =
     useUpdateTransactionsMutation();
 
+  const { isLoading: isLoadingDelete, mutateAsync: removeTransaction } =
+    useRemoveTransactionsMutation();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
       await updateTransaction({
@@ -60,7 +68,7 @@ export function useEditTransactionModalController(
           ? "Despesa editada com sucesso!"
           : "Receita editada com sucesso!",
       );
-      onClose();
+      closeEditTransactionModal();
     } catch (error) {
       toast.error(
         transaction!.type === TransactionType.EXPENSE
@@ -69,6 +77,33 @@ export function useEditTransactionModalController(
       );
     }
   });
+
+  function handleOpenDeleteModal() {
+    setIsDeleteModalOpen(true);
+  }
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false);
+  }
+
+  async function handleDeleteTransaction() {
+    try {
+      await removeTransaction(transaction!.id);
+
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      toast.success(
+        transaction!.type === TransactionType.EXPENSE
+          ? "Despesa excluída com sucesso!"
+          : "Receita excluída com sucesso!",
+      );
+      closeEditTransactionModal();
+    } catch (error) {
+      toast.error(
+        transaction!.type === TransactionType.EXPENSE
+          ? "Desculpe, ocorreu um erro ao exluir a despesa. Tente novamente."
+          : "Desculpe, ocorreu um erro ao exluir a receita. Tente novamente.",
+      );
+    }
+  }
 
   const categories = useMemo(() => {
     return categoriesList.filter(
@@ -92,7 +127,12 @@ export function useEditTransactionModalController(
     isLoading,
     control,
     errors,
+    isDeleteModalOpen,
+    isLoadingDelete,
     register,
     handleSubmit,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteTransaction,
   };
 }

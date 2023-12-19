@@ -24,3 +24,13 @@ export function useUpdateTransactionsMutation() {
 
   return { mutateAsync: mutation.mutateAsync, isLoading: mutation.isLoading };
 }
+
+export function useRemoveTransactionsMutation() {
+  const mutation = useMutation({
+    mutationFn: async (transactionId: string) => {
+      return transactionsService.remove(transactionId);
+    },
+  });
+
+  return { mutateAsync: mutation.mutateAsync, isLoading: mutation.isLoading };
+}
