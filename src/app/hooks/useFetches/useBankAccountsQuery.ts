@@ -5,6 +5,7 @@ export default function useBankAccountsQuery() {
   const query = useQuery({
     queryKey: ["bankAccounts"],
     queryFn: bankAccountsService.getAll,
+    staleTime: Infinity,
   });
 
   return { ...query };

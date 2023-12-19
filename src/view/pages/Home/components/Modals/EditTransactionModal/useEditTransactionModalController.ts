@@ -63,6 +63,7 @@ export function useEditTransactionModalController(
       });
 
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
       toast.success(
         transaction!.type === TransactionType.EXPENSE
           ? "Despesa editada com sucesso!"
@@ -90,6 +91,7 @@ export function useEditTransactionModalController(
       await removeTransaction(transaction!.id);
 
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
       toast.success(
         transaction!.type === TransactionType.EXPENSE
           ? "Despesa excluída com sucesso!"
