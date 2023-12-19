@@ -10,9 +10,11 @@ import { localStorageKeys } from "../config/localStorageKeys";
 import useCurrentUserQuery from "../hooks/useFetches/useCurrentUserQuery";
 import { toast } from "react-hot-toast";
 import { LaunchScreen } from "../../view/components/LaunchScreen";
+import { CurrentUser } from "../entities/CurrentUser";
 
 interface AuthContextValue {
   signedIn: boolean;
+  user: CurrentUser | undefined;
   signin(accessToken: string): void;
   signout(): void;
 }
@@ -29,7 +31,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return !!persistedAccessToken;
   });
 
-  const { isError, isFetching, isSuccess, remove } = useCurrentUserQuery({
+  const {
+    isError,
+    isFetching,
+    isSuccess,
+    data: user,
+    remove,
+  } = useCurrentUserQuery({
     enabled: signedIn,
   });
 
@@ -48,8 +56,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [setPersistedAccessToken, setSignedIn, remove]);
 
   const authContextValue = useMemo(
-    () => ({ signedIn: isSuccess && signedIn, signin, signout }),
-    [isSuccess, signedIn, signin, signout],
+    () => ({ signedIn: isSuccess && signedIn, user, signin, signout }),
+    [isSuccess, signedIn, user, signin, signout],
   );
 
   useEffect(() => {
