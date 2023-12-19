@@ -13,6 +13,7 @@ import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { FiltersModal } from "./FiltersModal";
 import { TransactionType } from "../../../../../app/entities/Transaction";
 import { formatDate } from "../../../../../app/utils/formatDate";
+import { EditTransactionModal } from "../Modals/EditTransactionModal";
 
 export function Transactions() {
   const {
@@ -22,9 +23,13 @@ export function Transactions() {
     isLoading,
     transactions,
     isFiltersModalOpen,
+    isEditModalOpen,
+    transactionBeingEdited,
     handleChangeFilters,
     handleOpenFiltersModal,
     handleCloseFiltersModal,
+    handleOpenEditModal,
+    handleCloseEditModal,
     handleApplyFilters,
   } = useTransactionsController();
 
@@ -102,43 +107,55 @@ export function Transactions() {
               </div>
             )}
 
-            {hasTransactions &&
-              !isLoading &&
-              transactions.map((transaction) => (
-                <div
-                  key={transaction.id}
-                  className="p-4 rounded-2xl flex items-center justify-between gap-4 bg-white"
-                >
-                  <div className="flex-1 flex items-center gap-3">
-                    <CategoryIcon
-                      type={transaction.type}
-                      category={transaction.category?.icon}
-                    />
+            {hasTransactions && !isLoading && (
+              <>
+                {transactionBeingEdited && (
+                  <EditTransactionModal
+                    isOpen={isEditModalOpen}
+                    onClose={handleCloseEditModal}
+                    transaction={transactionBeingEdited}
+                  />
+                )}
 
-                    <div>
-                      <strong className="font-bold tracking-customTight block">
-                        {transaction.name}
-                      </strong>
-                      <span className="text-sm text-gray-600">
-                        {formatDate(new Date(transaction.date))}
-                      </span>
-                    </div>
-                  </div>
-
-                  <span
-                    className={cn(
-                      "font-medium tracking-customTight",
-                      transaction.type === TransactionType.EXPENSE
-                        ? "text-red-800"
-                        : "text-green-800",
-                      !areValuesVisible && "blur-sm",
-                    )}
+                {transactions.map((transaction) => (
+                  <div
+                    key={transaction.id}
+                    className="p-4 rounded-2xl flex items-center justify-between gap-4 bg-white"
+                    role="button"
+                    onClick={() => handleOpenEditModal(transaction)}
                   >
-                    {transaction.type === TransactionType.EXPENSE ? "-" : "+"}
-                    {formatCurrency(transaction.value)}
-                  </span>
-                </div>
-              ))}
+                    <div className="flex-1 flex items-center gap-3">
+                      <CategoryIcon
+                        type={transaction.type}
+                        category={transaction.category?.icon}
+                      />
+
+                      <div>
+                        <strong className="font-bold tracking-customTight block">
+                          {transaction.name}
+                        </strong>
+                        <span className="text-sm text-gray-600">
+                          {formatDate(new Date(transaction.date))}
+                        </span>
+                      </div>
+                    </div>
+
+                    <span
+                      className={cn(
+                        "font-medium tracking-customTight",
+                        transaction.type === TransactionType.EXPENSE
+                          ? "text-red-800"
+                          : "text-green-800",
+                        !areValuesVisible && "blur-sm",
+                      )}
+                    >
+                      {transaction.type === TransactionType.EXPENSE ? "-" : "+"}
+                      {formatCurrency(transaction.value)}
+                    </span>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </>
       )}

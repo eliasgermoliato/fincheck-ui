@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { useHome } from "../HomeContext/useHome";
 import useTransactionsQuery from "../../../../../app/hooks/useFetches/useTransactionsQuery";
-import { TransactionFilters } from "../../../../../app/entities/Transaction";
+import {
+  Transaction,
+  TransactionFilters,
+} from "../../../../../app/entities/Transaction";
 
 export function useTransactionsController() {
   const { areValuesVisible } = useHome();
 
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [transactionBeingEdited, setTransactionBeingEdited] =
+    useState<null | Transaction>(null);
 
   const [filters, setFilters] = useState<TransactionFilters>({
     month: new Date().getMonth(),
@@ -45,6 +51,16 @@ export function useTransactionsController() {
     setIsFiltersModalOpen(false);
   }
 
+  function handleOpenEditModal(transaction: Transaction) {
+    setIsEditModalOpen(true);
+    setTransactionBeingEdited(transaction);
+  }
+
+  function handleCloseEditModal() {
+    setIsEditModalOpen(false);
+    setTransactionBeingEdited(null);
+  }
+
   function handleApplyFilters({
     bankAccountId,
     year,
@@ -64,9 +80,13 @@ export function useTransactionsController() {
     isLoading,
     transactions,
     isFiltersModalOpen,
+    isEditModalOpen,
+    transactionBeingEdited,
     handleChangeFilters,
     handleOpenFiltersModal,
     handleCloseFiltersModal,
+    handleOpenEditModal,
+    handleCloseEditModal,
     handleApplyFilters,
   };
 }

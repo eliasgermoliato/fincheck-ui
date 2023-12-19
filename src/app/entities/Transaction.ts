@@ -8,6 +8,8 @@ export enum TransactionType {
 export type Transaction = {
   id: string;
   name: string;
+  categoryId: string;
+  bankAccountId: string;
   value: number;
   date: string;
   type: TransactionType;
@@ -22,5 +24,7 @@ export type TransactionFilters = {
 };
 
 export interface CreateTransactionParams extends Omit<Transaction, "id"> {}
+
+export interface UpdateTransactionParams extends Transaction {}
 
 export interface TransactionsResponse extends Array<Transaction> {}
