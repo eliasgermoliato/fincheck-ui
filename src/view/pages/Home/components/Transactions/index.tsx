@@ -16,11 +16,13 @@ import { formatDate } from "../../../../../app/utils/formatDate";
 
 export function Transactions() {
   const {
+    filters,
     areValuesVisible,
     isInitialLoading,
     isLoading,
     transactions,
     isFiltersModalOpen,
+    handleChangeFilters,
     handleOpenFiltersModal,
     handleCloseFiltersModal,
   } = useTransactionsController();
@@ -52,7 +54,14 @@ export function Transactions() {
             </div>
 
             <div className="mt-6 relative">
-              <Swiper slidesPerView={3} centeredSlides>
+              <Swiper
+                slidesPerView={3}
+                centeredSlides
+                initialSlide={filters.month}
+                onSlideChange={(swiper) => {
+                  handleChangeFilters("month")(swiper.realIndex);
+                }}
+              >
                 <SliderNavigation />
                 {MONTHS.map((month, index) => (
                   <SwiperSlide key={month}>

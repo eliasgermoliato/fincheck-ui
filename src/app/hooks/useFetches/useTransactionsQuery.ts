@@ -1,14 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { transactionsService } from "../../services/transactionsService";
+import { TransactionFilters } from "../../entities/Transaction";
 
-export default function useTransactionsQuery() {
+export default function useTransactionsQuery(filters: TransactionFilters) {
   const query = useQuery({
     queryKey: ["transactions"],
-    queryFn: () =>
-      transactionsService.getAll({
-        month: 11,
-        year: 2023,
-      }),
+    queryFn: () => transactionsService.getAll(filters),
   });
 
   return { ...query };
