@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { useHome } from "../HomeContext/useHome";
+import useTransactionsQuery from "../../../../../app/hooks/useFetches/useTransactionsQuery";
 
 export function useTransactionsController() {
   const { areValuesVisible } = useHome();
 
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
+
+  const {
+    data: transactions = [],
+    isInitialLoading,
+    isFetching: isLoading,
+  } = useTransactionsQuery();
 
   function handleOpenFiltersModal() {
     setIsFiltersModalOpen(true);
@@ -16,9 +23,9 @@ export function useTransactionsController() {
 
   return {
     areValuesVisible,
-    isInitialLoading: false,
-    isLoading: false,
-    transactions: [0],
+    isInitialLoading,
+    isLoading,
+    transactions,
     isFiltersModalOpen,
     handleOpenFiltersModal,
     handleCloseFiltersModal,

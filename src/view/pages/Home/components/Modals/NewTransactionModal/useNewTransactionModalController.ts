@@ -5,6 +5,11 @@ import { useForm } from "react-hook-form";
 import useBankAccountsQuery from "../../../../../../app/hooks/useFetches/useBankAccountsQuery";
 import useCategoriesQuery from "../../../../../../app/hooks/useFetches/useCategoriesQuery";
 import { useMemo } from "react";
+import { useCreateTransactionsMutation } from "../../../../../../app/hooks/useFetches/useTransactionsMutation";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { TransactionType } from "../../../../../../app/entities/Transaction";
+import { currencyStringToNumber } from "../../../../../../app/utils/currencyStringToNumber";
 
 const schema = z.object({
   value: z.string().nonempty("Informe o valor"),
@@ -28,17 +33,43 @@ export function useNewTransactionModalController() {
     handleSubmit: hookFormHandleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: getDefaultValues(),
   });
 
-  const handleSubmit = hookFormHandleSubmit((data) => {
-    console.log(data);
-  });
+  const queryClient = useQueryClient();
 
   const { data: accounts = [] } = useBankAccountsQuery();
   const { data: categoriesList = [] } = useCategoriesQuery();
+  const { isLoading, mutateAsync } = useCreateTransactionsMutation();
+
+  const handleSubmit = hookFormHandleSubmit(async (data) => {
+    try {
+      await mutateAsync({
+        ...data,
+        value: currencyStringToNumber(data.value),
+        type: newTransactionType!,
+        date: data.date.toISOString(),
+      });
+
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      toast.success(
+        newTransactionType === TransactionType.EXPENSE
+          ? "Despesa cadastrada com sucesso!"
+          : "Receita cadastrada com sucesso!",
+      );
+      closeNewTransactionModalOpen();
+      reset();
+    } catch (error) {
+      toast.error(
+        newTransactionType === TransactionType.EXPENSE
+          ? "Desculpe, ocorreu um erro ao cadastrar a despesa. Tente novamente."
+          : "Desculpe, ocorreu um erro ao cadastrar a receita. Tente novamente.",
+      );
+    }
+  });
 
   const categories = useMemo(() => {
     return categoriesList.filter(
@@ -60,6 +91,7 @@ export function useNewTransactionModalController() {
     accounts,
     categories,
     isNewTransactionModalOpen,
+    isLoading,
     newTransactionType,
     control,
     errors,

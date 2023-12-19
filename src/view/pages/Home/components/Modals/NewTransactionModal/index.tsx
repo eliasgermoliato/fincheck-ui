@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { TransactionType } from "../../../../../../app/entities/TransactionType";
+import { TransactionType } from "../../../../../../app/entities/Transaction";
 import { Button } from "../../../../../components/Button";
 import { DatePickerInput } from "../../../../../components/DatePickerInput";
 import { Input } from "../../../../../components/Input";
@@ -13,6 +13,7 @@ export function NewTransactionModal() {
     accounts,
     categories,
     isNewTransactionModalOpen,
+    isLoading,
     newTransactionType,
     control,
     errors,
@@ -108,7 +109,7 @@ export function NewTransactionModal() {
           />
         </div>
 
-        <Button type="submit" className="w-full mt-6">
+        <Button type="submit" className="w-full mt-6" isLoading={isLoading}>
           Criar
         </Button>
       </form>
